@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HabitTracker.UI", "HabitTracker.UI\HabitTracker.UI.csproj", "{7A6A4E1A-8688-4D19-89AD-447A139FAE53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HabitTracker.Core", "HabitTracker.Core\HabitTracker.Core.csproj", "{A2FB3477-6FFB-4C96-87AA-95A5729380CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HabitTracker.DataLayer", "HabitTracker.DataLayer\HabitTracker.DataLayer.csproj", "{3F63D46D-6475-4E75-A7B1-59D611E06D97}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7A6A4E1A-8688-4D19-89AD-447A139FAE53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A6A4E1A-8688-4D19-89AD-447A139FAE53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A6A4E1A-8688-4D19-89AD-447A139FAE53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A6A4E1A-8688-4D19-89AD-447A139FAE53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2FB3477-6FFB-4C96-87AA-95A5729380CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2FB3477-6FFB-4C96-87AA-95A5729380CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2FB3477-6FFB-4C96-87AA-95A5729380CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2FB3477-6FFB-4C96-87AA-95A5729380CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F63D46D-6475-4E75-A7B1-59D611E06D97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F63D46D-6475-4E75-A7B1-59D611E06D97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F63D46D-6475-4E75-A7B1-59D611E06D97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F63D46D-6475-4E75-A7B1-59D611E06D97}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
