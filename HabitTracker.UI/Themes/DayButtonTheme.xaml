@@ -9,6 +9,9 @@
                     <ControlTemplate TargetType="RadioButton">
                         <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                               Background="{TemplateBinding Property=Background}">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}" />
                             <TextBlock Text="{Binding }" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </Grid>
                     </ControlTemplate>
@@ -23,6 +26,10 @@
             <Trigger Property="IsChecked" Value="True">
                 <Setter Property="Background" Value="#22202f" />
             </Trigger>
+            <DataTrigger Binding="{Binding IsComplete}" Value="True">
+                <Setter Property="BorderThickness" Value="2.5"></Setter>
+                <Setter Property="BorderBrush" Value="Lime"></Setter>
+            </DataTrigger>
         </Style.Triggers>
     </Style>
 </ResourceDictionary>

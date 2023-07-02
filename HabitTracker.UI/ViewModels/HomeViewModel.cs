@@ -45,7 +45,7 @@ public sealed class HomeViewModel : ObservableObject
         CalendarItems = new ObservableCollection<CalendarItem>();
         var startDate = DateTime.Today.AddDays(-3);
 
-        for (var i = 0; i < 7; i++)
+        for (var i = 0; i < 7; i++) //TODO: load days data and set completed flag
         {
             CalendarItems.Add(new CalendarItem
             {
