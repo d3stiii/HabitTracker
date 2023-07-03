@@ -6,9 +6,10 @@
         xmlns:viewModels="clr-namespace:HabitTracker.UI.ViewModels"
         mc:Ignorable="d"
         Title="HabitTracker"
-        Height="600" Width="1000"
         MinHeight="600"
-        MinWidth="1000"
+        Height="600"
+        MinWidth="1125"
+        Width="1125"
         Background="#272537">
     <Window.DataContext>
         <viewModels:MainViewModel />
@@ -34,6 +35,6 @@
             </StackPanel>
         </Grid>
 
-        <ContentControl Grid.Column="1" Content="{Binding CurrentView}"/>
+        <ContentControl Grid.Column="1" Content="{Binding CurrentView}" />
     </Grid>
 </Window>

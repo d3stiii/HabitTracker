@@ -36,7 +36,7 @@ public sealed class HomeViewModel : ObservableObject
     public RelayCommand SelectDayCommand => new(o =>
     {
         var calendarItem = (CalendarItem)o;
-        
+
         SelectedDayDate = GetDate(calendarItem.Date);
     });
 
