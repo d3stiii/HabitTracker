@@ -1,55 +1,40 @@
-﻿<Window x:Class="HabitTracker.UI.Views.HomeView"
+﻿<UserControl x:Class="HabitTracker.UI.Views.HomeView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:HabitTracker.UI.ViewModels"
         mc:Ignorable="d"
-        Title="HabitTracker"
-        Height="800" Width="1080"
-        WindowState="Maximized"
+        d:DesignHeight="600" d:DesignWidth="800"
         Background="#272537">
-    <Window.DataContext>
+    <UserControl.DataContext>
         <viewModels:HomeViewModel />
-    </Window.DataContext>
+    </UserControl.DataContext>
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80" />
             <RowDefinition Height="80" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="80" />
         </Grid.RowDefinitions>
 
         <TextBlock Text="{Binding SelectedDayDate}" FontSize="25" HorizontalAlignment="Center"
-                   VerticalAlignment="Center" Foreground="White" FontWeight="Bold">
-        </TextBlock>
+                   VerticalAlignment="Center" Foreground="White" FontWeight="Bold" />
 
         <ItemsControl Grid.Row="1" Name="Calendar" ItemsSource="{Binding CalendarItems}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"></StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <RadioButton GroupName="DaySelection" Margin="0, 5, 15, 0" Content="{Binding }"
-                                 Command="{Binding DataContext.SelectDay, ElementName = Calendar}"
+                                 Command="{Binding DataContext.SelectDayCommand, ElementName = Calendar}"
                                  CommandParameter="{Binding}" Foreground="White" Width="100"
                                  Style="{StaticResource DayButtonTheme}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
-            <RadioButton GroupName="Navigation" Content="Home"
-                         Style="{StaticResource NavigationMenuTheme}" />
-            <RadioButton GroupName="Navigation" Content="Habits"
-                         Style="{StaticResource NavigationMenuTheme}" />
-            <RadioButton GroupName="Navigation" Content="Stats"
-                         Style="{StaticResource NavigationMenuTheme}" />
-            <RadioButton GroupName="Navigation" Content="Settings"
-                         Style="{StaticResource NavigationMenuTheme}" />
-        </StackPanel>
     </Grid>
-</Window>
+</UserControl>

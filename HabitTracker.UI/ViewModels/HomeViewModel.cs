@@ -33,7 +33,7 @@ public sealed class HomeViewModel : ObservableObject
         }
     }
 
-    public RelayCommand SelectDay => new(o =>
+    public RelayCommand SelectDayCommand => new(o =>
     {
         var calendarItem = (CalendarItem)o;
         
@@ -53,7 +53,7 @@ public sealed class HomeViewModel : ObservableObject
             });
         }
 
-        SelectDay.Execute(CalendarItems.First(x => x.Date == DateTime.Today));
+        SelectDayCommand.Execute(CalendarItems.First(x => x.Date == DateTime.Today));
     }
 
     private static string GetDate(DateTime date)

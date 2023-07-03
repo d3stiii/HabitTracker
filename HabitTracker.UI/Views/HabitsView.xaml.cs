@@ -1,8 +1,8 @@
-using System.Windows;
+using System.Windows.Controls;
 
 namespace HabitTracker.UI.Views;
 
-public partial class HabitsView : Window
+public partial class HabitsView : UserControl
 {
     public HabitsView()
     {

@@ -1,8 +1,8 @@
-﻿using System.Windows;
+﻿using System.Windows.Controls;
 
 namespace HabitTracker.UI.Views;
 
-public partial class HomeView : Window
+public partial class HomeView : UserControl
 {
     public HomeView()
     {
