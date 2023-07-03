@@ -1,0 +1,65 @@
+<Window x:Class="HabitTracker.UI.Views.HabitsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:HabitTracker.UI.Views"
+        xmlns:viewModels="clr-namespace:HabitTracker.UI.ViewModels"
+        xmlns:converters="clr-namespace:HabitTracker.UI.Converters"
+        mc:Ignorable="d"
+        Title="HabitTracker"
+        Height="800" Width="1080"
+        WindowState="Maximized"
+        Background="#272537">
+    <Window.DataContext>
+        <viewModels:HabitsViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <converters:DayOfWeekConverter x:Key="DayOfWeekConverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="120"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Habits" FontWeight="Bold" Foreground="White" FontSize="50" HorizontalAlignment="Center"
+                   VerticalAlignment="Center" />
+
+        <ListBox Grid.Row="1" ItemsSource="{Binding Habits}" Background="Transparent" HorizontalAlignment="Center"
+                 BorderThickness="0">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border Background="#22202f" CornerRadius="10" Margin="5">
+                                    <ContentPresenter />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Width="250">
+                        <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="18" Foreground="White" Margin="5,0, 0, 0" />
+                        <TextBlock Text="{Binding DaysOfWeek, Converter={StaticResource DayOfWeekConverter}}"
+                                   FontSize="13" Foreground="White" Margin="5,0, 0, 5" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Button Grid.Row="2" Content="Add habit" FontSize="20" Width="200" Foreground="White"
+                Background="CornflowerBlue" BorderThickness="0" Margin="0, 20, 0, 20">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"></Setter>
+                </Style>
+            </Button.Resources>
+        </Button>
+    </Grid>
+</Window>
