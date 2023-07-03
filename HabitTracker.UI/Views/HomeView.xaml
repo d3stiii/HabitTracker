@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="HabitTracker"
         Height="800" Width="1080"
+        ResizeMode="NoResize"
         Background="#272537">
     <Window.DataContext>
         <viewModels:HomeViewModel />
@@ -16,10 +17,12 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="80" />
             <RowDefinition Height="80" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="80" />
         </Grid.RowDefinitions>
 
         <TextBlock Text="{Binding SelectedDayDate}" FontSize="25" HorizontalAlignment="Center"
-                   VerticalAlignment="Center">
+                   VerticalAlignment="Center" Foreground="White">
         </TextBlock>
 
         <ItemsControl Grid.Row="1" Name="Calendar" ItemsSource="{Binding CalendarItems}">
@@ -37,5 +40,16 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
+            <RadioButton GroupName="Navigation" Content="Home"
+                         Style="{StaticResource NavigationMenuTheme}" />
+            <RadioButton GroupName="Navigation" Content="Habits"
+                         Style="{StaticResource NavigationMenuTheme}" />
+            <RadioButton GroupName="Navigation" Content="Stats"
+                         Style="{StaticResource NavigationMenuTheme}" />
+            <RadioButton GroupName="Navigation" Content="Settings"
+                         Style="{StaticResource NavigationMenuTheme}" />
+        </StackPanel>
     </Grid>
 </Window>
