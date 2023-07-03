@@ -5,6 +5,8 @@ namespace HabitTracker.UI.ViewModels;
 
 public class MainViewModel : ObservableObject
 {
+    private readonly HomeViewModel _homeViewModel;
+    private readonly HabitsViewModel _habitsViewModel;
     private object _currentView;
 
     public object CurrentView
@@ -18,11 +20,13 @@ public class MainViewModel : ObservableObject
         }
     }
 
-    public RelayCommand OpenHomeViewCommand => new(o => CurrentView = new HomeViewModel());
-    public RelayCommand OpenHabitsViewCommand => new(o => CurrentView = new HabitsViewModel());
+    public RelayCommand OpenHomeViewCommand => new(o => CurrentView = _homeViewModel);
+    public RelayCommand OpenHabitsViewCommand => new(o => CurrentView = _habitsViewModel);
 
     public MainViewModel()
     {
-        CurrentView = new HomeViewModel();
+        _homeViewModel = new HomeViewModel();
+        _habitsViewModel = new HabitsViewModel();
+        CurrentView = _homeViewModel;
     }
 }
