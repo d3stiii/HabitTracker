@@ -23,6 +23,6 @@ public class MainViewModel : ObservableObject
 
     public MainViewModel()
     {
-        CurrentView = new HabitsViewModel();
+        CurrentView = new HomeViewModel();
     }
 }
