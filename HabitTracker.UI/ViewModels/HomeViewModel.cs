@@ -6,7 +6,7 @@ using HabitTracker.Core.Models;
 
 namespace HabitTracker.UI.ViewModels;
 
-public sealed class HomeViewModel : ObservableObject
+public sealed class HomeViewModel : ViewModel
 {
     private ObservableCollection<CalendarItem> _calendarItems;
     private string _selectedDayDate;

@@ -5,7 +5,7 @@ using HabitTracker.Core.Models;
 
 namespace HabitTracker.UI.ViewModels;
 
-public class HabitsViewModel : ObservableObject
+public class HabitsViewModel : ViewModel
 {
     private ObservableCollection<Habit> _habits;
 
@@ -47,7 +47,8 @@ public class HabitsViewModel : ObservableObject
                 Title = "Watch films",
                 DaysOfWeek = new ObservableCollection<DayOfWeek>()
                 {
-                    DayOfWeek.Monday, DayOfWeek.Friday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Saturday, DayOfWeek.Sunday, DayOfWeek.Thursday
+                    DayOfWeek.Monday, DayOfWeek.Friday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Saturday,
+                    DayOfWeek.Sunday, DayOfWeek.Thursday
                 }
             }
         };

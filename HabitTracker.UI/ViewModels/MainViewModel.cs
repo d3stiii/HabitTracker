@@ -1,32 +1,20 @@
-using System;
 using HabitTracker.Core;
 
 namespace HabitTracker.UI.ViewModels;
 
-public class MainViewModel : ObservableObject
+public class MainViewModel : ViewModel
 {
-    private readonly HomeViewModel _homeViewModel;
-    private readonly HabitsViewModel _habitsViewModel;
-    private object _currentView;
+    private readonly NavigationService _navigationService;
 
-    public object CurrentView
+    public MainViewModel(NavigationService navigationService)
     {
-        get => _currentView;
-        set
-        {
-            if (Equals(value, _currentView)) return;
-            _currentView = value ?? throw new ArgumentNullException(nameof(value));
-            OnPropertyChanged();
-        }
+        _navigationService = navigationService;
+        _navigationService.NavigateTo<HomeViewModel>();
     }
 
-    public RelayCommand OpenHomeViewCommand => new(o => CurrentView = _homeViewModel);
-    public RelayCommand OpenHabitsViewCommand => new(o => CurrentView = _habitsViewModel);
+    public NavigationService NavigationService => _navigationService;
 
-    public MainViewModel()
-    {
-        _homeViewModel = new HomeViewModel();
-        _habitsViewModel = new HabitsViewModel();
-        CurrentView = _homeViewModel;
-    }
+    public RelayCommand OpenHomeViewCommand => new(o => _navigationService.NavigateTo<HomeViewModel>());
+
+    public RelayCommand OpenHabitsViewCommand => new(o => _navigationService.NavigateTo<HabitsViewModel>());
 }
