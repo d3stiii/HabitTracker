@@ -1,6 +1,3 @@
 namespace HabitTracker.Core;
 
-public class ViewModel : ObservableObject
-{
-    
-}
+public class ViewModel : ObservableObject { }

@@ -48,7 +48,8 @@
         </ListBox>
 
         <Button Grid.Row="2" Content="Add habit" FontSize="20" Width="200" Foreground="White"
-                Background="CornflowerBlue" BorderThickness="0" Margin="0, 20, 0, 20" Command="{Binding OpenAddHabitViewCommand}">
+                Background="CornflowerBlue" BorderThickness="0" Margin="0, 20, 0, 20"
+                Command="{Binding OpenAddHabitViewCommand}">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="10" />

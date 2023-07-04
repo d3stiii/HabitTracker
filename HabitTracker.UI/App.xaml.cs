@@ -15,12 +15,15 @@ public partial class App : Application
 
     public App()
     {
-        var culture = new CultureInfo("en-US");
-        Thread.CurrentThread.CurrentCulture = culture;
-        Thread.CurrentThread.CurrentUICulture = culture;
+        SetCulture("en-US");
 
         IServiceCollection services = new ServiceCollection();
+        BindServices(services);
+        _serviceProvider = services.BuildServiceProvider();
+    }
 
+    private static void BindServices(IServiceCollection services)
+    {
         services.AddSingleton<MainWindow>(provider => new MainWindow
         {
             DataContext = provider.GetRequiredService<MainViewModel>()
@@ -32,8 +35,6 @@ public partial class App : Application
         services.AddSingleton<NavigationService>();
         services.AddSingleton<Func<Type, ViewModel>>(provider =>
             viewModelType => (ViewModel)provider.GetRequiredService(viewModelType));
-
-        _serviceProvider = services.BuildServiceProvider();
     }
 
     protected override void OnStartup(StartupEventArgs e)
@@ -41,5 +42,12 @@ public partial class App : Application
         var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
         mainWindow.Show();
         base.OnStartup(e);
+    }
+
+    private static void SetCulture(string cultureName)
+    {
+        var culture = new CultureInfo(cultureName);
+        Thread.CurrentThread.CurrentCulture = culture;
+        Thread.CurrentThread.CurrentUICulture = culture;
     }
 }

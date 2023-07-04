@@ -20,6 +20,6 @@ public class DayOfWeekConverter : IValueConverter
         return string.Join(", ", abbreviatedDays);
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => 
         throw new NotSupportedException();
 }

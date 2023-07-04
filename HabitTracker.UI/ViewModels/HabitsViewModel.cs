@@ -9,17 +9,6 @@ public class HabitsViewModel : ViewModel
 {
     private ObservableCollection<Habit> _habits;
 
-    public ObservableCollection<Habit> Habits
-    {
-        get => _habits;
-        set
-        {
-            if (Equals(value, _habits)) return;
-            _habits = value ?? throw new ArgumentNullException(nameof(value));
-            OnPropertyChanged();
-        }
-    }
-
     public HabitsViewModel()
     {
         //TODO: Load habits
@@ -45,12 +34,23 @@ public class HabitsViewModel : ViewModel
             new()
             {
                 Title = "Watch films",
-                DaysOfWeek = new ObservableCollection<DayOfWeek>()
+                DaysOfWeek = new ObservableCollection<DayOfWeek>
                 {
                     DayOfWeek.Monday, DayOfWeek.Friday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Saturday,
                     DayOfWeek.Sunday, DayOfWeek.Thursday
                 }
             }
         };
+    }
+
+    public ObservableCollection<Habit> Habits
+    {
+        get => _habits;
+        set
+        {
+            if (Equals(value, _habits)) return;
+            _habits = value ?? throw new ArgumentNullException(nameof(value));
+            OnPropertyChanged();
+        }
     }
 }

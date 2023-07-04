@@ -4,17 +4,15 @@ namespace HabitTracker.UI.ViewModels;
 
 public class MainViewModel : ViewModel
 {
-    private readonly NavigationService _navigationService;
-
     public MainViewModel(NavigationService navigationService)
     {
-        _navigationService = navigationService;
-        _navigationService.NavigateTo<HomeViewModel>();
+        NavigationService = navigationService;
+        NavigationService.NavigateTo<HomeViewModel>();
     }
 
-    public NavigationService NavigationService => _navigationService;
+    public NavigationService NavigationService { get; }
 
-    public RelayCommand OpenHomeViewCommand => new(o => _navigationService.NavigateTo<HomeViewModel>());
+    public RelayCommand OpenHomeViewCommand => new(o => NavigationService.NavigateTo<HomeViewModel>());
 
-    public RelayCommand OpenHabitsViewCommand => new(o => _navigationService.NavigateTo<HabitsViewModel>());
+    public RelayCommand OpenHabitsViewCommand => new(o => NavigationService.NavigateTo<HabitsViewModel>());
 }

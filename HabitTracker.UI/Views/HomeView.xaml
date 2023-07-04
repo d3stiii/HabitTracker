@@ -37,8 +37,7 @@
                                  Command="{Binding DataContext.SelectDayCommand, ElementName = Calendar}"
                                  CommandParameter="{Binding}"
                                  IsChecked="{Binding Date, Mode=OneWay, Converter={StaticResource TodayDateConverter}}"
-                                 Style="{StaticResource DayButtonTheme}">
-                    </RadioButton>
+                                 Style="{StaticResource DayButtonTheme}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

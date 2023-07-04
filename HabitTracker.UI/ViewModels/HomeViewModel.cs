@@ -11,6 +11,20 @@ public sealed class HomeViewModel : ViewModel
     private ObservableCollection<CalendarItem> _calendarItems;
     private string _selectedDayDate;
 
+    public HomeViewModel()
+    {
+        CalendarItems = new ObservableCollection<CalendarItem>();
+        var startDate = DateTime.Today.AddDays(-3);
+
+        for (var i = 0; i < 7; i++) //TODO: load days data and set completed flag
+            CalendarItems.Add(new CalendarItem
+            {
+                Date = startDate.AddDays(i)
+            });
+
+        SelectDayCommand.Execute(CalendarItems.First(x => x.Date == DateTime.Today));
+    }
+
     public ObservableCollection<CalendarItem> CalendarItems
     {
         get => _calendarItems;
@@ -40,30 +54,12 @@ public sealed class HomeViewModel : ViewModel
         SelectedDayDate = GetDate(calendarItem.Date);
     });
 
-    public HomeViewModel()
-    {
-        CalendarItems = new ObservableCollection<CalendarItem>();
-        var startDate = DateTime.Today.AddDays(-3);
-
-        for (var i = 0; i < 7; i++) //TODO: load days data and set completed flag
-        {
-            CalendarItems.Add(new CalendarItem
-            {
-                Date = startDate.AddDays(i)
-            });
-        }
-
-        SelectDayCommand.Execute(CalendarItems.First(x => x.Date == DateTime.Today));
-    }
-
-    private static string GetDate(DateTime date)
-    {
-        return (date.Date - DateTime.Today).Days switch
+    private static string GetDate(DateTime date) =>
+        (date.Date - DateTime.Today).Days switch
         {
             0 => "Today",
             -1 => "Yesterday",
             1 => "Tomorrow",
             _ => date.Date.ToString("dd/MM/yyyy")
         };
-    }
 }

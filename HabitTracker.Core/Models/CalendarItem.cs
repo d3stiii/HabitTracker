@@ -5,5 +5,6 @@ public class CalendarItem
     public DateTime Date { get; set; }
     public bool IsComplete { get; set; }
 
-    public override string ToString() => $"{Date:dddd}";
+    public override string ToString() => 
+        $"{Date:dddd}";
 }

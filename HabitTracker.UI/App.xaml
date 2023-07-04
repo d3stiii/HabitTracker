@@ -9,7 +9,7 @@
                 <ResourceDictionary Source="Themes/DayButtonTheme.xaml" />
                 <ResourceDictionary Source="Themes/NavigationButtonTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
+
             <DataTemplate DataType="{x:Type viewModels:HomeViewModel}">
                 <views:HomeView />
             </DataTemplate>

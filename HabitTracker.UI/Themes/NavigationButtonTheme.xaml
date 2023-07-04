@@ -10,7 +10,7 @@
                         <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                               Background="{TemplateBinding Property=Background}" Margin="0,20,0,0">
                             <TextBlock Text="{TemplateBinding Content}" VerticalAlignment="Center"
-                                       HorizontalAlignment="Center" Foreground="White"/>
+                                       HorizontalAlignment="Center" Foreground="White" />
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -20,7 +20,7 @@
             <Setter Property="FontSize" Value="25" />
             <Setter Property="Width" Value="100" />
         </Style.Setters>
-        
+
         <Style.Triggers>
             <Trigger Property="IsChecked" Value="True">
                 <Setter Property="Background" Value="#22202f" />
