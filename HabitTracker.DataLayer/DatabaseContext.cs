@@ -7,5 +7,9 @@ public sealed class DatabaseContext : DbContext
 {
     public DbSet<Habit> Habits { get; set; } = null!;
 
-    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
+    public DatabaseContext() => 
+        Database.EnsureCreated();
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => 
+        optionsBuilder.UseSqlite("Data Source=habittracker.db");
 }

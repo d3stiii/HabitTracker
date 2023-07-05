@@ -7,7 +7,6 @@ using HabitTracker.DataLayer;
 using HabitTracker.Services;
 using HabitTracker.UI.ViewModels;
 using HabitTracker.UI.Views;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HabitTracker.UI;
@@ -25,9 +24,10 @@ public partial class App
     private void BindServices()
     {
         IServiceCollection services = new ServiceCollection();
+        var database = new DatabaseContext();
+        
         services
-            .AddDbContext<DatabaseContext>(options =>
-                options.UseSqlite("Data Source=habittracker.db"))
+            .AddSingleton(database)
             .AddSingleton<MainWindow>(provider => new MainWindow
             {
                 DataContext = provider.GetRequiredService<MainViewModel>()
