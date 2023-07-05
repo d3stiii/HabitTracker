@@ -41,10 +41,12 @@
                         <StackPanel Width="250">
                             <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="18" Foreground="White"
                                        Margin="5,0, 0, 0" />
+                            <TextBlock Text="{Binding Description}" FontSize="13" Foreground="White"
+                                       Margin="5,0, 0, 0" />
                             <TextBlock Text="{Binding DaysOfWeek, Converter={StaticResource DayOfWeekConverter}}"
                                        FontSize="13" Foreground="White" Margin="5,0, 0, 5" />
                         </StackPanel>
-                        <Button Content="Delete" Foreground="White"
+                        <Button Content="Delete" Foreground="White" Width="60"
                                 Command="{Binding DataContext.DeleteHabitCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}">
                         </Button>
                     </StackPanel>
