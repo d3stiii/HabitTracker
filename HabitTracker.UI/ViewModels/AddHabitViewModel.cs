@@ -16,13 +16,13 @@ public class AddHabitViewModel : ViewModel
         _navigationService = navigationService;
         DaysOfWeek = new ObservableCollection<DayOfWeekModel>
         {
-            new() { Title = "MO" },
-            new() { Title = "TU" },
-            new() { Title = "WE" },
-            new() { Title = "TH" },
-            new() { Title = "FR" },
-            new() { Title = "SA" },
-            new() { Title = "SU" },
+            new() { Day = DayOfWeek.Monday },
+            new() { Day = DayOfWeek.Tuesday },
+            new() { Day = DayOfWeek.Wednesday },
+            new() { Day = DayOfWeek.Thursday },
+            new() { Day = DayOfWeek.Friday },
+            new() { Day = DayOfWeek.Saturday },
+            new() { Day = DayOfWeek.Sunday },
         };
     }
 

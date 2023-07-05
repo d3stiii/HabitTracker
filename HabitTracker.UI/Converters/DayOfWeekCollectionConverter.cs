@@ -6,7 +6,7 @@ using System.Windows.Data;
 
 namespace HabitTracker.UI.Converters;
 
-public class DayOfWeekConverter : IValueConverter
+public class DayOfWeekCollectionConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
