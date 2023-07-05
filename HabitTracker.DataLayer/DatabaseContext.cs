@@ -1,3 +1,11 @@
-﻿namespace HabitTracker.DataLayer;
+﻿using HabitTracker.Core.Models;
+using Microsoft.EntityFrameworkCore;
 
-public class DatabaseContext { }
+namespace HabitTracker.DataLayer;
+
+public sealed class DatabaseContext : DbContext
+{
+    public DbSet<Habit> Habits { get; set; } = null!;
+
+    public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
+}

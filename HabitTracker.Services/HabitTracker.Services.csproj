@@ -8,10 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\HabitTracker.Core\HabitTracker.Core.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.0-preview.5.23280.1" />
+      <ProjectReference Include="..\HabitTracker.DataLayer\HabitTracker.DataLayer.csproj" />
     </ItemGroup>
 
 </Project>

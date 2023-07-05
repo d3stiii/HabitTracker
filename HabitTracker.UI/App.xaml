@@ -17,8 +17,8 @@
             <DataTemplate DataType="{x:Type viewModels:HabitsViewModel}">
                 <views:HabitsView />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type viewModels:AddHabitViewModel}">
-                <views:AddHabitView />
+            <DataTemplate DataType="{x:Type viewModels:HabitSettingsViewModel}">
+                <views:HabitSettingsView />
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>

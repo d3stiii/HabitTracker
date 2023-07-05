@@ -1,9 +1,11 @@
-namespace HabitTracker.Core.Services;
+using HabitTracker.Core;
+
+namespace HabitTracker.Services;
 
 public class NavigationService : ObservableObject
 {
     private readonly Func<Type, ViewModel> _viewModelFactory;
-    private ViewModel _currentView;
+    private ViewModel _currentView = null!;
 
     public NavigationService(Func<Type, ViewModel> viewModelFactory)
     {
@@ -20,9 +22,13 @@ public class NavigationService : ObservableObject
         }
     }
 
-    public void NavigateTo<TViewModel>() where TViewModel : ObservableObject
+    public void NavigateTo<TViewModel>() where TViewModel : ViewModel
     {
         var viewModel = _viewModelFactory(typeof(TViewModel));
+        
+        viewModel.OnInitialize();
+        Task.Run(async () => await viewModel.OnInitializeAsync());
+        
         CurrentView = viewModel;
     }
 }

@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HabitTracker.Core", "HabitT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HabitTracker.DataLayer", "HabitTracker.DataLayer\HabitTracker.DataLayer.csproj", "{3F63D46D-6475-4E75-A7B1-59D611E06D97}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HabitTracker.Services", "HabitTracker.Services\HabitTracker.Services.csproj", "{DD1D14EF-2E55-43E3-B066-4E2032FDA2CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{3F63D46D-6475-4E75-A7B1-59D611E06D97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F63D46D-6475-4E75-A7B1-59D611E06D97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F63D46D-6475-4E75-A7B1-59D611E06D97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD1D14EF-2E55-43E3-B066-4E2032FDA2CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD1D14EF-2E55-43E3-B066-4E2032FDA2CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD1D14EF-2E55-43E3-B066-4E2032FDA2CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD1D14EF-2E55-43E3-B066-4E2032FDA2CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -3,14 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewModels="clr-namespace:HabitTracker.UI.ViewModels"
              xmlns:converters="clr-namespace:HabitTracker.UI.Converters"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="925"
              Background="#272537">
-    <UserControl.DataContext>
-        <viewModels:HomeViewModel />
-    </UserControl.DataContext>
     <UserControl.Resources>
         <converters:TodayDateConverter x:Key="TodayDateConverter" />
     </UserControl.Resources>

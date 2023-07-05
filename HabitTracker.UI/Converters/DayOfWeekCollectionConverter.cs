@@ -16,7 +16,7 @@ public class DayOfWeekCollectionConverter : IValueConverter
 
         if (daysOfWeek is { Count: 7 }) return "Every day";
 
-        var abbreviatedDays = daysOfWeek!.Select(d => d.ToString()[..3]);
+        var abbreviatedDays = daysOfWeek.Select(d => d.ToString()[..3]);
         return string.Join(", ", abbreviatedDays);
     }
 

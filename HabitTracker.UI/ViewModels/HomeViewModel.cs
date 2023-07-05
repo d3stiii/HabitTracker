@@ -3,27 +3,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using HabitTracker.Core;
 using HabitTracker.Core.Models;
+using HabitTracker.UI.Commands;
 
 namespace HabitTracker.UI.ViewModels;
 
 public sealed class HomeViewModel : ViewModel
 {
-    private ObservableCollection<CalendarItem> _calendarItems;
-    private string _selectedDayDate;
-
-    public HomeViewModel()
-    {
-        CalendarItems = new ObservableCollection<CalendarItem>();
-        var startDate = DateTime.Today.AddDays(-3);
-
-        for (var i = 0; i < 7; i++) //TODO: load days data and set completed flag
-            CalendarItems.Add(new CalendarItem
-            {
-                Date = startDate.AddDays(i)
-            });
-
-        SelectDayCommand.Execute(CalendarItems.First(x => x.Date == DateTime.Today));
-    }
+    private ObservableCollection<CalendarItem> _calendarItems = null!;
+    private string _selectedDayDate = null!;
 
     public ObservableCollection<CalendarItem> CalendarItems
     {
@@ -62,4 +49,21 @@ public sealed class HomeViewModel : ViewModel
             1 => "Tomorrow",
             _ => date.Date.ToString("dd/MM/yyyy")
         };
+
+    public override void OnInitialize()
+    {
+        CalendarItems = new ObservableCollection<CalendarItem>();
+        var startDate = DateTime.Today.AddDays(-3);
+
+        for (var i = 0; i < 7; i++)
+        {
+            //TODO: load days data and set completed flag
+            CalendarItems.Add(new CalendarItem
+            {
+                Date = startDate.AddDays(i)
+            });
+        }
+
+        SelectDayCommand.Execute(CalendarItems.First(x => x.Date == DateTime.Today));
+    }
 }

@@ -9,6 +9,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\HabitTracker.Core\HabitTracker.Core.csproj" />
+        <ProjectReference Include="..\HabitTracker.Services\HabitTracker.Services.csproj" />
     </ItemGroup>
 
     <ItemGroup>

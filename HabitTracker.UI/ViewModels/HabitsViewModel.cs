@@ -1,53 +1,34 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using HabitTracker.Core;
 using HabitTracker.Core.Models;
-using HabitTracker.Core.Services;
+using HabitTracker.Services;
+using HabitTracker.UI.Commands;
 
 namespace HabitTracker.UI.ViewModels;
 
 public class HabitsViewModel : ViewModel
 {
     private readonly NavigationService _navigationService;
-    private ObservableCollection<Habit> _habits;
+    private readonly HabitRepository _habitRepository;
+    private ObservableCollection<Habit> _habits = null!;
 
-    public HabitsViewModel(NavigationService navigationService)
+    public HabitsViewModel(NavigationService navigationService, HabitRepository habitRepository)
     {
         _navigationService = navigationService;
-        //TODO: Load habits
-        Habits = new ObservableCollection<Habit>
-        {
-            new()
-            {
-                Title = "Code",
-                DaysOfWeek = new ObservableCollection<DayOfWeek>
-                {
-                    DayOfWeek.Monday, DayOfWeek.Wednesday, DayOfWeek.Friday, DayOfWeek.Sunday, DayOfWeek.Saturday,
-                    DayOfWeek.Tuesday
-                }
-            },
-            new()
-            {
-                Title = "Read",
-                DaysOfWeek = new ObservableCollection<DayOfWeek>
-                {
-                    DayOfWeek.Saturday, DayOfWeek.Tuesday
-                }
-            },
-            new()
-            {
-                Title = "Watch films",
-                DaysOfWeek = new ObservableCollection<DayOfWeek>
-                {
-                    DayOfWeek.Monday, DayOfWeek.Friday, DayOfWeek.Tuesday, DayOfWeek.Wednesday, DayOfWeek.Saturday,
-                    DayOfWeek.Sunday, DayOfWeek.Thursday
-                }
-            }
-        };
+        _habitRepository = habitRepository;
     }
 
-    public RelayCommand OpenAddHabitViewCommand => new(o => _navigationService.NavigateTo<AddHabitViewModel>());
-    
+    public RelayCommand OpenAddHabitViewCommand => new(_ => _navigationService.NavigateTo<HabitSettingsViewModel>());
+
+    public AsyncRelayCommand DeleteHabitCommand => new(async o =>
+    {
+        var habit = (Habit)o;
+        await _habitRepository.DeleteHabit(habit);
+        await LoadHabits();
+    });
+
     public ObservableCollection<Habit> Habits
     {
         get => _habits;
@@ -58,4 +39,10 @@ public class HabitsViewModel : ViewModel
             OnPropertyChanged();
         }
     }
+
+    public override async Task OnInitializeAsync() => 
+        await LoadHabits();
+
+    private async Task LoadHabits() => 
+        Habits = new ObservableCollection<Habit>(await _habitRepository.GetAllHabits());
 }

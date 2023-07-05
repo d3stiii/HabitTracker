@@ -2,9 +2,9 @@ using System.Windows.Controls;
 
 namespace HabitTracker.UI.Views;
 
-public partial class AddHabitView : UserControl
+public partial class HabitSettingsView : UserControl
 {
-    public AddHabitView()
+    public HabitSettingsView()
     {
         InitializeComponent();
     }

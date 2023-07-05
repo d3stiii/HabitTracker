@@ -1,3 +1,8 @@
 namespace HabitTracker.Core;
 
-public class ViewModel : ObservableObject { }
+public abstract class ViewModel : ObservableObject
+{
+    public virtual void OnInitialize() { }
+
+    public virtual Task OnInitializeAsync() => Task.CompletedTask;
+}

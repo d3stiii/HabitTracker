@@ -1,5 +1,6 @@
 using HabitTracker.Core;
-using HabitTracker.Core.Services;
+using HabitTracker.Services;
+using HabitTracker.UI.Commands;
 
 namespace HabitTracker.UI.ViewModels;
 
@@ -13,7 +14,7 @@ public class MainViewModel : ViewModel
 
     public NavigationService NavigationService { get; }
 
-    public RelayCommand OpenHomeViewCommand => new(o => NavigationService.NavigateTo<HomeViewModel>());
+    public RelayCommand OpenHomeViewCommand => new(_ => NavigationService.NavigateTo<HomeViewModel>());
 
-    public RelayCommand OpenHabitsViewCommand => new(o => NavigationService.NavigateTo<HabitsViewModel>());
+    public RelayCommand OpenHabitsViewCommand => new(_ => NavigationService.NavigateTo<HabitsViewModel>());
 }

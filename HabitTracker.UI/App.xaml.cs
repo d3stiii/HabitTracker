@@ -3,40 +3,46 @@ using System.Globalization;
 using System.Threading;
 using System.Windows;
 using HabitTracker.Core;
-using HabitTracker.Core.Services;
+using HabitTracker.DataLayer;
+using HabitTracker.Services;
 using HabitTracker.UI.ViewModels;
 using HabitTracker.UI.Views;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HabitTracker.UI;
 
-public partial class App : Application
+public partial class App
 {
-    private readonly ServiceProvider _serviceProvider;
+    private ServiceProvider _serviceProvider = null!;
 
     public App()
     {
         SetCulture("en-US");
-
-        IServiceCollection services = new ServiceCollection();
-        BindServices(services);
-        _serviceProvider = services.BuildServiceProvider();
+        BindServices();
     }
 
-    private static void BindServices(IServiceCollection services)
+    private void BindServices()
     {
-        services.AddSingleton<MainWindow>(provider => new MainWindow
-        {
-            DataContext = provider.GetRequiredService<MainViewModel>()
-        });
+        IServiceCollection services = new ServiceCollection();
+        services
+            .AddDbContext<DatabaseContext>(options =>
+                options.UseSqlite("Data Source=habittracker.db"))
+            .AddSingleton<MainWindow>(provider => new MainWindow
+            {
+                DataContext = provider.GetRequiredService<MainViewModel>()
+            })
+            .AddSingleton<MainViewModel>()
+            .AddSingleton<HomeViewModel>()
+            .AddSingleton<HabitsViewModel>()
+            .AddSingleton<HabitSettingsViewModel>()
+            .AddSingleton<NavigationService>()
+            .AddSingleton<DatabaseContext>()
+            .AddSingleton<HabitRepository>()
+            .AddSingleton<Func<Type, ViewModel>>(provider =>
+                viewModelType => (ViewModel)provider.GetRequiredService(viewModelType));
 
-        services.AddSingleton<MainViewModel>();
-        services.AddSingleton<HomeViewModel>();
-        services.AddSingleton<HabitsViewModel>();
-        services.AddSingleton<AddHabitViewModel>();
-        services.AddSingleton<NavigationService>();
-        services.AddSingleton<Func<Type, ViewModel>>(provider =>
-            viewModelType => (ViewModel)provider.GetRequiredService(viewModelType));
+        _serviceProvider = services.BuildServiceProvider();
     }
 
     protected override void OnStartup(StartupEventArgs e)
