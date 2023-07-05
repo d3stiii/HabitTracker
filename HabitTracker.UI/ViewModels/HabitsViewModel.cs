@@ -2,15 +2,18 @@ using System;
 using System.Collections.ObjectModel;
 using HabitTracker.Core;
 using HabitTracker.Core.Models;
+using HabitTracker.Core.Services;
 
 namespace HabitTracker.UI.ViewModels;
 
 public class HabitsViewModel : ViewModel
 {
+    private readonly NavigationService _navigationService;
     private ObservableCollection<Habit> _habits;
 
-    public HabitsViewModel()
+    public HabitsViewModel(NavigationService navigationService)
     {
+        _navigationService = navigationService;
         //TODO: Load habits
         Habits = new ObservableCollection<Habit>
         {
@@ -43,6 +46,8 @@ public class HabitsViewModel : ViewModel
         };
     }
 
+    public RelayCommand OpenAddHabitViewCommand => new(o => _navigationService.NavigateTo<AddHabitViewModel>());
+    
     public ObservableCollection<Habit> Habits
     {
         get => _habits;

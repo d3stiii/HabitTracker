@@ -1,4 +1,4 @@
-namespace HabitTracker.Core;
+namespace HabitTracker.Core.Services;
 
 public class NavigationService : ObservableObject
 {

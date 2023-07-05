@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Threading;
 using System.Windows;
 using HabitTracker.Core;
+using HabitTracker.Core.Services;
 using HabitTracker.UI.ViewModels;
 using HabitTracker.UI.Views;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +33,7 @@ public partial class App : Application
         services.AddSingleton<MainViewModel>();
         services.AddSingleton<HomeViewModel>();
         services.AddSingleton<HabitsViewModel>();
+        services.AddSingleton<AddHabitViewModel>();
         services.AddSingleton<NavigationService>();
         services.AddSingleton<Func<Type, ViewModel>>(provider =>
             viewModelType => (ViewModel)provider.GetRequiredService(viewModelType));

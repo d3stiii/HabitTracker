@@ -8,6 +8,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes/DayButtonTheme.xaml" />
                 <ResourceDictionary Source="Themes/NavigationButtonTheme.xaml" />
+                <ResourceDictionary Source="Themes/PlaceholderTextBoxTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type viewModels:HomeViewModel}">
@@ -15,6 +16,9 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewModels:HabitsViewModel}">
                 <views:HabitsView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:AddHabitViewModel}">
+                <views:AddHabitView />
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
