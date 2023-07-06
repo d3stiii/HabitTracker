@@ -4,9 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:HabitTracker.UI.Controls"
+             xmlns:converters="clr-namespace:HabitTracker.UI.Converters"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="800"
              Background="#272537">
+    <UserControl.Resources>
+        <converters:DayOfWeekToShortNameConverter x:Key="DayOfWeekToShortNameConverter" />
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80" />
@@ -22,13 +26,13 @@
         <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,10,0,0">
             <controls:PlaceholderTextBox MaxWidth="300" VerticalAlignment="Center"
                                          VerticalContentAlignment="Center"
-                                         Placeholder="Name" Height="30" Text="{Binding HabitTitle}"/>
+                                         Placeholder="Name" Height="30" Text="{Binding HabitTitle}" />
             <controls:PlaceholderTextBox MaxWidth="300" VerticalAlignment="Center"
                                          VerticalContentAlignment="Center" Placeholder="Description" Height="50"
-                                         Margin="0,10,0,0" Text="{Binding HabitDescription}"/>
+                                         Margin="0,10,0,0" Text="{Binding HabitDescription}" />
         </StackPanel>
 
-        <ItemsControl Grid.Row="2" ItemsSource="{Binding DaysOfWeek}" HorizontalAlignment="Center">
+        <ItemsControl Grid.Row="2" ItemsSource="{Binding DisplayDaysOfWeek}" HorizontalAlignment="Center">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" />
@@ -38,12 +42,13 @@
                 <DataTemplate>
                     <StackPanel Orientation="Vertical" Margin="0,0,15,0">
                         <CheckBox
-                            IsChecked="{Binding IsChecked}">
+                            Command="{Binding DataContext.CheckDayCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                            CommandParameter="{Binding}">
                             <CheckBox.LayoutTransform>
                                 <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
                             </CheckBox.LayoutTransform>
                         </CheckBox>
-                        <TextBlock Text="{Binding Title}" Foreground="White" HorizontalAlignment="Center" />
+                        <TextBlock Text="{Binding Converter={StaticResource DayOfWeekToShortNameConverter}}" Foreground="White" HorizontalAlignment="Center" />
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

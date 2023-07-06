@@ -14,7 +14,8 @@ public class HabitSettingsViewModel : ViewModel
 {
     private readonly NavigationService _navigationService;
     private readonly HabitRepository _habitRepository;
-    private ObservableCollection<DayOfWeekSelectionItem> _daysOfWeek = null!;
+    private ObservableCollection<DayOfWeek> _displayHabitDaysOfWeek = null!;
+    private ObservableCollection<DayOfWeek> _habitDaysOfWeek = null!;
     private string _habitTitle = null!;
     private string _habitDescription = null!;
 
@@ -46,34 +47,56 @@ public class HabitSettingsViewModel : ViewModel
         }
     }
 
-    public ObservableCollection<DayOfWeekSelectionItem> DaysOfWeek
+    public ObservableCollection<DayOfWeek> DisplayDaysOfWeek
     {
-        get => _daysOfWeek;
+        get => _displayHabitDaysOfWeek;
         set
         {
-            if (Equals(value, _daysOfWeek)) return;
-            _daysOfWeek = value ?? throw new ArgumentNullException(nameof(value));
+            if (Equals(value, _displayHabitDaysOfWeek)) return;
+            _displayHabitDaysOfWeek = value ?? throw new ArgumentNullException(nameof(value));
+            OnPropertyChanged();
+        }
+    }
+
+    public ObservableCollection<DayOfWeek> HabitDaysOfWeek
+    {
+        get => _habitDaysOfWeek;
+        set
+        {
+            if (Equals(value, _habitDaysOfWeek)) return;
+            _habitDaysOfWeek = value ?? throw new ArgumentNullException(nameof(value));
             OnPropertyChanged();
         }
     }
 
     public AsyncRelayCommand AddHabitCommand => new(AddHabit, CanAdd);
 
+    public RelayCommand CheckDayCommand => new(o =>
+    {
+        var dayOfWeek = (DayOfWeek)o;
+        if (HabitDaysOfWeek.Remove(dayOfWeek))
+        {
+            return;
+        }
+
+        HabitDaysOfWeek.Add(dayOfWeek);
+    });
+
     public override void OnInitialize()
     {
+        HabitDaysOfWeek = new ObservableCollection<DayOfWeek>();
         ResetInputs();
-        InitializeDaysOfWeek();
+        InitializeDisplayDaysOfWeek();
     }
 
     private bool CanAdd(object obj) =>
-        !string.IsNullOrWhiteSpace(HabitTitle) && !string.IsNullOrWhiteSpace(HabitDescription) &&
-        DaysOfWeek.Any(x => x.IsChecked);
+        !string.IsNullOrWhiteSpace(HabitTitle) && !string.IsNullOrWhiteSpace(HabitDescription) && HabitDaysOfWeek.Any();
 
     private async Task AddHabit(object obj)
     {
         var habit = new Habit
         {
-            DaysOfWeek = new ObservableCollection<DayOfWeek>(_daysOfWeek.Where(x => x.IsChecked).Select(x => x.Day)),
+            DaysOfWeek = HabitDaysOfWeek,
             Description = HabitDescription,
             Title = HabitTitle
         };
@@ -90,17 +113,17 @@ public class HabitSettingsViewModel : ViewModel
         HabitDescription = string.Empty;
     }
 
-    private void InitializeDaysOfWeek()
+    private void InitializeDisplayDaysOfWeek()
     {
-        DaysOfWeek = new ObservableCollection<DayOfWeekSelectionItem>
+        DisplayDaysOfWeek = new ObservableCollection<DayOfWeek>
         {
-            new() { Day = DayOfWeek.Monday },
-            new() { Day = DayOfWeek.Tuesday },
-            new() { Day = DayOfWeek.Wednesday },
-            new() { Day = DayOfWeek.Thursday },
-            new() { Day = DayOfWeek.Friday },
-            new() { Day = DayOfWeek.Saturday },
-            new() { Day = DayOfWeek.Sunday },
+            DayOfWeek.Monday,
+            DayOfWeek.Tuesday,
+            DayOfWeek.Wednesday,
+            DayOfWeek.Thursday,
+            DayOfWeek.Friday,
+            DayOfWeek.Saturday,
+            DayOfWeek.Sunday
         };
     }
 }
