@@ -15,12 +15,19 @@ public class HabitProcessor
     public List<Habit> GetHabitsOnDay(List<Habit> allHabits, DateTime date) =>
         allHabits.Where(x => x.DaysOfWeek.Contains(date.DayOfWeek)).ToList();
 
-    public async Task ProcessHabitsOnDay(List<Habit> habitsOnDay, DateTime date)
+    public async Task<ICollection<HabitCompletion>> AddMissingHabitCompletions(IEnumerable<Habit> habitsOnDay,
+        DateTime date)
     {
+        var completions = new List<HabitCompletion>();
         foreach (var habit in habitsOnDay)
         {
             var completion = habit.Completions.FirstOrDefault(x => x.Date == date);
-            if (completion != null) continue;
+            if (completion != null)
+            {
+                completions.Add(completion);
+                continue;
+            }
+
             completion = new HabitCompletion
             {
                 Habit = habit,
@@ -29,6 +36,9 @@ public class HabitProcessor
             };
 
             await _completionsRepository.AddItem(completion);
+            completions.Add(completion);
         }
+
+        return completions;
     }
 }

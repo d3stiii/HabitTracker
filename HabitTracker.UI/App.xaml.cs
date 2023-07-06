@@ -34,7 +34,6 @@ public partial class App
                 DataContext = provider.GetRequiredService<MainViewModel>()
             })
             .AddSingleton<HabitProcessor>()
-            .AddSingleton<TrackingDaysManager>()
             .AddSingleton<MainViewModel>()
             .AddSingleton<HomeViewModel>()
             .AddSingleton<HabitsViewModel>()

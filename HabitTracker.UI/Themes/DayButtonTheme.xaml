@@ -28,7 +28,7 @@
             <Trigger Property="IsChecked" Value="True">
                 <Setter Property="Background" Value="#22202f" />
             </Trigger>
-            <DataTrigger Binding="{Binding IsComplete}" Value="True">
+            <DataTrigger Binding="{Binding IsCompleted}" Value="True">
                 <Setter Property="BorderThickness" Value="2.5" />
                 <Setter Property="BorderBrush" Value="Lime" />
             </DataTrigger>

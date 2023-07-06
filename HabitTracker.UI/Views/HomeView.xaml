@@ -11,6 +11,7 @@
         <converters:TodayDateConverter x:Key="TodayDateConverter" />
         <converters:DayOfWeekCollectionConverter x:Key="DayOfWeekConverter" />
         <converters:DateToDayOfWeekConverter x:Key="DateToDayOfWeekConverter" />
+        <converters:DateToHomeTitleConverter x:Key="DateToHomeTitleConverter" />
     </UserControl.Resources>
 
     <Grid>
@@ -20,10 +21,11 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="{Binding SelectedDayDate}" FontSize="50" HorizontalAlignment="Center"
+        <TextBlock Text="{Binding SelectedDay.Date, Converter={StaticResource DateToHomeTitleConverter}}" FontSize="50"
+                   HorizontalAlignment="Center"
                    VerticalAlignment="Center" Foreground="White" FontWeight="Bold" />
 
-        <ItemsControl Grid.Row="1" Name="Calendar" ItemsSource="{Binding TrackingDays}">
+        <ItemsControl Grid.Row="1" Name="Calendar" ItemsSource="{Binding Days}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" />
@@ -32,16 +34,17 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <RadioButton GroupName="DaySelection" Margin="0, 5, 15, 0"
-                                 Content="{Binding Converter= {StaticResource DateToDayOfWeekConverter}}"
+                                 Content="{Binding Date, Converter= {StaticResource DateToDayOfWeekConverter}}"
                                  Command="{Binding DataContext.SelectDayCommand, ElementName = Calendar}"
                                  CommandParameter="{Binding}"
-                                 IsChecked="{Binding Mode=OneWay, Converter={StaticResource TodayDateConverter}}"
+                                 IsChecked="{Binding Date, Mode=OneWay, Converter={StaticResource TodayDateConverter}}"
                                  Style="{StaticResource DayButtonTheme}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
-        <ListBox Grid.Row="2" ItemsSource="{Binding HabitsOnDay}" Background="Transparent" HorizontalAlignment="Center"
+        <ListBox Grid.Row="2" ItemsSource="{Binding SelectedDay.Habits}" Background="Transparent"
+                 HorizontalAlignment="Center"
                  BorderThickness="0">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
