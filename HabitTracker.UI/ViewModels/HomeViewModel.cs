@@ -87,14 +87,14 @@ public sealed class HomeViewModel : ViewModel
         for (var i = 0; i < 7; i++)
         {
             var date = startDate.AddDays(i);
+            Application.Current.Dispatcher.Invoke(() => { _trackingDaysManager.AddTrackingDay(TrackingDays, date); });
+            
             var habitsOnDay = _habitProcessor.GetHabitsOnDay(allHabits, date);
 
             if (habitsOnDay.Count == 0)
                 continue;
 
             await _habitProcessor.ProcessHabitsOnDay(habitsOnDay, date);
-
-            Application.Current.Dispatcher.Invoke(() => { _trackingDaysManager.AddTrackingDay(TrackingDays, date); });
         }
         
         await _completionsRepository.Save();
