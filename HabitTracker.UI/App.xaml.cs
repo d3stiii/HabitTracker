@@ -5,6 +5,7 @@ using System.Windows;
 using HabitTracker.Core;
 using HabitTracker.DataLayer;
 using HabitTracker.Services;
+using HabitTracker.Services.Repositories;
 using HabitTracker.UI.ViewModels;
 using HabitTracker.UI.Views;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,13 +26,15 @@ public partial class App
     {
         IServiceCollection services = new ServiceCollection();
         var database = new DatabaseContext();
-        
+
         services
             .AddSingleton(database)
             .AddSingleton<MainWindow>(provider => new MainWindow
             {
                 DataContext = provider.GetRequiredService<MainViewModel>()
             })
+            .AddSingleton<HabitProcessor>()
+            .AddSingleton<TrackingDaysManager>()
             .AddSingleton<MainViewModel>()
             .AddSingleton<HomeViewModel>()
             .AddSingleton<HabitsViewModel>()
@@ -39,6 +42,7 @@ public partial class App
             .AddSingleton<NavigationService>()
             .AddSingleton<DatabaseContext>()
             .AddSingleton<HabitRepository>()
+            .AddSingleton<CompletionsRepository>()
             .AddSingleton<Func<Type, ViewModel>>(provider =>
                 viewModelType => (ViewModel)provider.GetRequiredService(viewModelType));
 

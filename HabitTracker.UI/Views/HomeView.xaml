@@ -9,6 +9,8 @@
              Background="#272537">
     <UserControl.Resources>
         <converters:TodayDateConverter x:Key="TodayDateConverter" />
+        <converters:DayOfWeekCollectionConverter x:Key="DayOfWeekConverter" />
+        <converters:DateToDayOfWeekConverter x:Key="DateToDayOfWeekConverter" />
     </UserControl.Resources>
 
     <Grid>
@@ -21,7 +23,7 @@
         <TextBlock Text="{Binding SelectedDayDate}" FontSize="50" HorizontalAlignment="Center"
                    VerticalAlignment="Center" Foreground="White" FontWeight="Bold" />
 
-        <ItemsControl Grid.Row="1" Name="Calendar" ItemsSource="{Binding CalendarItems}">
+        <ItemsControl Grid.Row="1" Name="Calendar" ItemsSource="{Binding TrackingDays}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" />
@@ -29,13 +31,52 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <RadioButton GroupName="DaySelection" Margin="0, 5, 15, 0" Content="{Binding }"
+                    <RadioButton GroupName="DaySelection" Margin="0, 5, 15, 0"
+                                 Content="{Binding Converter= {StaticResource DateToDayOfWeekConverter}}"
                                  Command="{Binding DataContext.SelectDayCommand, ElementName = Calendar}"
                                  CommandParameter="{Binding}"
-                                 IsChecked="{Binding Date, Mode=OneWay, Converter={StaticResource TodayDateConverter}}"
+                                 IsChecked="{Binding Mode=OneWay, Converter={StaticResource TodayDateConverter}}"
                                  Style="{StaticResource DayButtonTheme}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+
+        <ListBox Grid.Row="2" ItemsSource="{Binding HabitsOnDay}" Background="Transparent" HorizontalAlignment="Center"
+                 BorderThickness="0">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border Background="#22202f" CornerRadius="10" Margin="5">
+                                    <ContentPresenter />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Width="250">
+                            <TextBlock Text="{Binding Habit.Title}" FontWeight="Bold" FontSize="18" Foreground="White"
+                                       Margin="5,0, 0, 0" />
+                            <TextBlock Text="{Binding Habit.Description}" FontSize="13" Foreground="White"
+                                       Margin="5,0, 0, 0" />
+                            <TextBlock Text="{Binding Habit.DaysOfWeek, Converter={StaticResource DayOfWeekConverter}}"
+                                       FontSize="13" Foreground="White" Margin="5,0, 0, 5" />
+                        </StackPanel>
+                        <CheckBox VerticalAlignment="Center"
+                                  Command="{Binding DataContext.CheckHabitCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                  CommandParameter="{Binding }" IsChecked="{Binding IsCompleted, Mode=OneWay}">
+                            <CheckBox.LayoutTransform>
+                                <ScaleTransform ScaleX="2" ScaleY="2" />
+                            </CheckBox.LayoutTransform>
+                        </CheckBox>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>

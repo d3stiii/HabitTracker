@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using HabitTracker.Core;
 using HabitTracker.Core.Models;
 using HabitTracker.Services;
+using HabitTracker.Services.Repositories;
 using HabitTracker.UI.Commands;
 
 namespace HabitTracker.UI.ViewModels;
@@ -21,13 +22,7 @@ public class HabitsViewModel : ViewModel
     }
 
     public RelayCommand OpenAddHabitViewCommand => new(_ => _navigationService.NavigateTo<HabitSettingsViewModel>());
-
-    public AsyncRelayCommand DeleteHabitCommand => new(async o =>
-    {
-        var habit = (Habit)o;
-        await _habitRepository.DeleteHabit(habit);
-        await LoadHabits();
-    });
+    public AsyncRelayCommand DeleteHabitCommand => new(DeleteHabit);
 
     public ObservableCollection<Habit> Habits
     {
@@ -40,9 +35,17 @@ public class HabitsViewModel : ViewModel
         }
     }
 
-    public override async Task OnInitializeAsync() => 
+    public override async Task OnInitializeAsync() =>
         await LoadHabits();
 
-    private async Task LoadHabits() => 
-        Habits = new ObservableCollection<Habit>(await _habitRepository.GetAllHabits());
+    private async Task LoadHabits() =>
+        Habits = new ObservableCollection<Habit>(await _habitRepository.GetAllItems());
+
+    private async Task DeleteHabit(object obj)
+    {
+        var habit = (Habit)obj;
+        _habitRepository.DeleteItem(habit);
+        await _habitRepository.Save();
+        await LoadHabits();
+    }
 }

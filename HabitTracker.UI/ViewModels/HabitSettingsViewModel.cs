@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using HabitTracker.Core;
 using HabitTracker.Core.Models;
 using HabitTracker.Services;
+using HabitTracker.Services.Repositories;
 using HabitTracker.UI.Commands;
 
 namespace HabitTracker.UI.ViewModels;
@@ -13,7 +14,7 @@ public class HabitSettingsViewModel : ViewModel
 {
     private readonly NavigationService _navigationService;
     private readonly HabitRepository _habitRepository;
-    private ObservableCollection<DayOfWeekModel> _daysOfWeek = null!;
+    private ObservableCollection<DayOfWeekSelectionItem> _daysOfWeek = null!;
     private string _habitTitle = null!;
     private string _habitDescription = null!;
 
@@ -45,7 +46,7 @@ public class HabitSettingsViewModel : ViewModel
         }
     }
 
-    public ObservableCollection<DayOfWeekModel> DaysOfWeek
+    public ObservableCollection<DayOfWeekSelectionItem> DaysOfWeek
     {
         get => _daysOfWeek;
         set
@@ -61,7 +62,37 @@ public class HabitSettingsViewModel : ViewModel
     public override void OnInitialize()
     {
         ResetInputs();
-        DaysOfWeek = new ObservableCollection<DayOfWeekModel>
+        InitializeDaysOfWeek();
+    }
+
+    private bool CanAdd(object obj) =>
+        !string.IsNullOrWhiteSpace(HabitTitle) && !string.IsNullOrWhiteSpace(HabitDescription) &&
+        DaysOfWeek.Any(x => x.IsChecked);
+
+    private async Task AddHabit(object obj)
+    {
+        var habit = new Habit
+        {
+            DaysOfWeek = new ObservableCollection<DayOfWeek>(_daysOfWeek.Where(x => x.IsChecked).Select(x => x.Day)),
+            Description = HabitDescription,
+            Title = HabitTitle
+        };
+
+        await _habitRepository.AddItem(habit);
+        await _habitRepository.Save();
+
+        _navigationService.NavigateTo<HabitsViewModel>();
+    }
+
+    private void ResetInputs()
+    {
+        HabitTitle = string.Empty;
+        HabitDescription = string.Empty;
+    }
+
+    private void InitializeDaysOfWeek()
+    {
+        DaysOfWeek = new ObservableCollection<DayOfWeekSelectionItem>
         {
             new() { Day = DayOfWeek.Monday },
             new() { Day = DayOfWeek.Tuesday },
@@ -71,28 +102,5 @@ public class HabitSettingsViewModel : ViewModel
             new() { Day = DayOfWeek.Saturday },
             new() { Day = DayOfWeek.Sunday },
         };
-    }
-
-    private bool CanAdd(object obj) =>
-        !string.IsNullOrEmpty(HabitTitle) && !string.IsNullOrEmpty(HabitDescription) &&
-        DaysOfWeek.Any(x => x.IsChecked);
-
-    private async Task AddHabit(object obj)
-    {
-        await _habitRepository.AddHabit(new Habit
-        {
-            DaysOfWeek = new ObservableCollection<DayOfWeek>(_daysOfWeek.Where(x => x.IsChecked)
-                .Select(x => x.Day)),
-            Description = HabitDescription,
-            Title = HabitTitle
-        });
-
-        _navigationService.NavigateTo<HabitsViewModel>();
-    }
-
-    private void ResetInputs()
-    {
-        HabitTitle = string.Empty;
-        HabitDescription = string.Empty;
     }
 }

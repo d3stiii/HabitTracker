@@ -1,24 +1,52 @@
 using System;
 using System.Collections.ObjectModel;
-using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 using HabitTracker.Core;
 using HabitTracker.Core.Models;
+using HabitTracker.Services;
+using HabitTracker.Services.Repositories;
 using HabitTracker.UI.Commands;
 
 namespace HabitTracker.UI.ViewModels;
 
 public sealed class HomeViewModel : ViewModel
 {
-    private ObservableCollection<CalendarItem> _calendarItems = null!;
+    private readonly HabitRepository _habitRepository;
+    private readonly CompletionsRepository _completionsRepository;
+    private readonly HabitProcessor _habitProcessor;
+    private readonly TrackingDaysManager _trackingDaysManager;
+    private ObservableCollection<DateTime> _trackingDays = null!;
+    private ObservableCollection<HabitCompletion> _habitsOnDay = null!;
     private string _selectedDayDate = null!;
 
-    public ObservableCollection<CalendarItem> CalendarItems
+    public HomeViewModel(HabitRepository habitRepository, CompletionsRepository completionsRepository,
+        HabitProcessor habitProcessor, TrackingDaysManager trackingDaysManager)
     {
-        get => _calendarItems;
+        _habitRepository = habitRepository;
+        _completionsRepository = completionsRepository;
+        _habitProcessor = habitProcessor;
+        _trackingDaysManager = trackingDaysManager;
+    }
+
+    public ObservableCollection<DateTime> TrackingDays
+    {
+        get => _trackingDays;
         set
         {
-            if (_calendarItems == value) return;
-            _calendarItems = value ?? throw new ArgumentNullException(nameof(value));
+            if (_trackingDays == value) return;
+            _trackingDays = value ?? throw new ArgumentNullException(nameof(value));
+            OnPropertyChanged();
+        }
+    }
+
+    public ObservableCollection<HabitCompletion> HabitsOnDay
+    {
+        get => _habitsOnDay;
+        set
+        {
+            if (Equals(value, _habitsOnDay)) return;
+            _habitsOnDay = value;
             OnPropertyChanged();
         }
     }
@@ -34,36 +62,51 @@ public sealed class HomeViewModel : ViewModel
         }
     }
 
-    public RelayCommand SelectDayCommand => new(o =>
+    public AsyncRelayCommand SelectDayCommand => new(async o =>
     {
-        var calendarItem = (CalendarItem)o;
+        var date = (DateTime)o;
 
-        SelectedDayDate = GetDate(calendarItem.Date);
+        SelectedDayDate = GetDate(date);
+        HabitsOnDay = new ObservableCollection<HabitCompletion>(await _completionsRepository.GetHabitsForDate(date));
     });
 
+    public AsyncRelayCommand CheckHabitCommand => new(async o =>
+    {
+        var completion = (HabitCompletion)o;
+        completion.IsCompleted = !completion.IsCompleted;
+
+        await _completionsRepository.Save();
+    });
+
+    public override async Task OnInitializeAsync()
+    {
+        TrackingDays = new ObservableCollection<DateTime>();
+        var startDate = DateTime.Today.AddDays(-3);
+        var allHabits = await _habitRepository.GetAllItems();
+
+        for (var i = 0; i < 7; i++)
+        {
+            var date = startDate.AddDays(i);
+            var habitsOnDay = _habitProcessor.GetHabitsOnDay(allHabits, date);
+
+            if (habitsOnDay.Count == 0)
+                continue;
+
+            await _habitProcessor.ProcessHabitsOnDay(habitsOnDay, date);
+
+            Application.Current.Dispatcher.Invoke(() => { _trackingDaysManager.AddTrackingDay(TrackingDays, date); });
+        }
+        
+        await _completionsRepository.Save();
+        SelectDayCommand.Execute(_trackingDaysManager.GetTodayCalendarItem(TrackingDays));
+    }
+
     private static string GetDate(DateTime date) =>
-        (date.Date - DateTime.Today).Days switch
+        (date - DateTime.Today).Days switch
         {
             0 => "Today",
             -1 => "Yesterday",
             1 => "Tomorrow",
             _ => date.Date.ToString("dd/MM/yyyy")
         };
-
-    public override void OnInitialize()
-    {
-        CalendarItems = new ObservableCollection<CalendarItem>();
-        var startDate = DateTime.Today.AddDays(-3);
-
-        for (var i = 0; i < 7; i++)
-        {
-            //TODO: load days data and set completed flag
-            CalendarItems.Add(new CalendarItem
-            {
-                Date = startDate.AddDays(i)
-            });
-        }
-
-        SelectDayCommand.Execute(CalendarItems.First(x => x.Date == DateTime.Today));
-    }
 }

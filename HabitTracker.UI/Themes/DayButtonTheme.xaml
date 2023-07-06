@@ -12,7 +12,7 @@
                             <Border Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}" />
-                            <TextBlock Text="{Binding }" VerticalAlignment="Center" Foreground="White" FontSize="18"
+                            <TextBlock Text="{TemplateBinding Content}" VerticalAlignment="Center" Foreground="White" FontSize="18"
                                        HorizontalAlignment="Center" />
                         </Grid>
                     </ControlTemplate>

@@ -1,6 +1,6 @@
 namespace HabitTracker.Core.Models;
 
-public class DayOfWeekModel
+public class DayOfWeekSelectionItem : ObservableObject
 {
     public DayOfWeek Day { get; set; }
     public bool IsChecked { get; set; }
