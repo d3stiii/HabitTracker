@@ -23,10 +23,6 @@
                              Style="{StaticResource NavigationButtonTheme}" IsChecked="True" />
                 <RadioButton GroupName="Navigation" Content="Habits" Command="{Binding OpenHabitsViewCommand}"
                              Style="{StaticResource NavigationButtonTheme}" />
-                <RadioButton GroupName="Navigation" Content="Stats"
-                             Style="{StaticResource NavigationButtonTheme}" />
-                <RadioButton GroupName="Navigation" Content="Settings"
-                             Style="{StaticResource NavigationButtonTheme}" />
             </StackPanel>
         </Grid>
 

@@ -12,7 +12,7 @@ public class HabitProcessor
         _completionsRepository = completionsRepository;
     }
 
-    public List<Habit> GetHabitsOnDay(List<Habit> allHabits, DateTime date) =>
+    public List<Habit> GetHabitsOnDay(IEnumerable<Habit> allHabits, DateTime date) =>
         allHabits.Where(x => x.DaysOfWeek.Contains(date.DayOfWeek)).ToList();
 
     public async Task<ICollection<HabitCompletion>> AddMissingHabitCompletions(IEnumerable<Habit> habitsOnDay,

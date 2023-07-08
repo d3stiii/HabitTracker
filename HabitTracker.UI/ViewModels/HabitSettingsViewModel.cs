@@ -90,7 +90,7 @@ public class HabitSettingsViewModel : ViewModel
     }
 
     private bool CanAdd(object obj) =>
-        !string.IsNullOrWhiteSpace(HabitTitle) && !string.IsNullOrWhiteSpace(HabitDescription) && HabitDaysOfWeek.Any();
+        !string.IsNullOrWhiteSpace(HabitTitle) && HabitDaysOfWeek.Any();
 
     private async Task AddHabit(object obj)
     {
